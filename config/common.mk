@@ -254,6 +254,8 @@ include vendor/aosp/config/version.mk
 # Branding
 $(call inherit-product, vendor/aosp/config/branding.mk)
 
+# Elegance
+include vendor/overlays/Elegance/elegance.mk
 
 # OTA
 $(call inherit-product, vendor/aosp/config/ota.mk)
