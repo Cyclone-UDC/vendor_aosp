@@ -16,11 +16,25 @@
 # -----------------------------------------------------------------
 # PixelOS OTA update package
 
+ifneq ($(BUILD_WITH_COLORS),0)
+    include $(TOP_DIR)vendor/aosp/build/core/colors.mk
+endif
+
+CUSTOM_TARGET_PACKAGE := $(PRODUCT_OUT)/$(CUSTOM_VERSION).zip
+
 CUSTOM_TARGET_PACKAGE := $(PRODUCT_OUT)/$(CUSTOM_VERSION).zip
 MD5 := prebuilts/build-tools/path/$(HOST_PREBUILT_TAG)/md5sum
 
-.PHONY: bacon
+.PHONY: bacon cyclone
 bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(CUSTOM_TARGET_PACKAGE)
 	$(hide) $(MD5) $(CUSTOM_TARGET_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(CUSTOM_TARGET_PACKAGE).md5sum
+	@echo -e ""
+	@echo -e ${CL_CYN}" ██████╗██╗   ██╗ ██████╗██╗      ██████╗ ███╗   ██╗███████╗ "
+	@echo -e ${CL_CYN}"██╔════╝╚██╗ ██╔╝██╔════╝██║     ██╔═══██╗████╗  ██║██╔════╝	"
+	@echo -e ${CL_CYN}"██║      ╚████╔╝ ██║     ██║     ██║   ██║██╔██╗ ██║█████╗  	"
+	@echo -e ${CL_CYN}"██║       ╚██╔╝  ██║     ██║     ██║   ██║██║╚██╗██║██╔══╝  	"
+	@echo -e ${CL_CYN}"╚██████╗   ██║   ╚██████╗███████╗╚██████╔╝██║ ╚████║███████╗ "
+	@echo -e ""
 	@echo "Package Complete: $(CUSTOM_TARGET_PACKAGE)" >&2
+bacon: cyclone
